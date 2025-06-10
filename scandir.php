@@ -15,7 +15,7 @@ $file_list = [];
 
 // 
 $files = array_diff(scandir($directory), ['.', '..']);
-var_dump($files);
+// var_dump($files);
 
 // 取得したファイルをURLに変換するためforeachで展開。
 foreach($files as $file) {
@@ -25,7 +25,11 @@ foreach($files as $file) {
     // var_dump($file_url);
 
     // 取得したファイルを配列に格納
-    $file_list[] = $file_url;
+    $file_list[] = [
+        // 連想配列（キー）を指定
+        'name' => $file,
+        'url' => $file_url
+    ];
 }
 // var_dump($file_url);
 var_dump($file_list);
