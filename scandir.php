@@ -10,7 +10,23 @@ $directory = $_SERVER['DOCUMENT_ROOT'] . '/work-product/';
 // WEB上のルートURL。「$base_url」+「ファイル名」でURLの生成。
 $base_url = 'https://lgqqi65169.rakkoserver.net/work-product/';
 
+// ファイルリストを格納する配列
+$file_list = [];
+
 $files = scandir($directory);
 // var_dump($files);
+
+// 取得したファイルをURLに変換するためforeachで展開。
+foreach($files as $file) {
+    // var_dump($file);
+
+    $file_url = $base_url . $file;
+    // var_dump($file_url);
+
+    // 取得したファイルを配列に格納
+    $file_list[] = $file_url;
+}
+// var_dump($file_url);
+var_dump($file_list);
 
 ?>
