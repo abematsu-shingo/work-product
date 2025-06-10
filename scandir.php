@@ -14,7 +14,7 @@ $base_url = 'https://lgqqi65169.rakkoserver.net/work-product/';
 $file_list = [];
 
 // 
-$files = array_diff(scandir($directory), array('.', '..'));
+$files = array_diff(scandir($directory), ['.', '..']);
 var_dump($files);
 
 // 取得したファイルをURLに変換するためforeachで展開。
