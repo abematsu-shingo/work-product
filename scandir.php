@@ -16,6 +16,7 @@ $file_list = [];
 $files = scandir($directory);
 // var_dump($files);
 
+// 取得したファイルをURLに変換するためforeachで展開。
 foreach($files as $file) {
     // var_dump($file);
 
