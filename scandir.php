@@ -21,7 +21,8 @@ $files = array_diff(scandir($directory), ['.', '..']);
 foreach($files as $file) {
     // var_dump($file);
 
-    $file_url = $base_url . $file;
+    // ファイル名に使用された特殊文字をURL用にエンコード
+    $file_url = $base_url . urlencode($file);
     // var_dump($file_url);
 
     // 取得したファイルを配列に格納
