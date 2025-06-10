@@ -7,6 +7,9 @@ header('Content-Type: application/json');
 
 // echo $_SERVER['DOCUMENT_ROOT'];
 $directory = $_SERVER['DOCUMENT_ROOT'] . '/work-product/';
+// WEB上のルートURL。「$base_url」+「ファイル名」でURLの生成。
+$base_url = 'https://lgqqi65169.rakkoserver.net/work-product/';
+
 $files = scandir($directory);
 // var_dump($files);
 
