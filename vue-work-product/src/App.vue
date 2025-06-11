@@ -20,7 +20,7 @@ const getApi = async () => {
   <button @click="getApi">Get Api</button>
 
   <!-- 取得したデータをリスト出力 -->
-  <ul>
+  <ul v-if="files.length">
     <li v-for="file in files" :key="file.name">
       <a :href="file.url" target="_blank" rel="noopener noreferrer">{{ file.name }}</a>
     </li>
