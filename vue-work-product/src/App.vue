@@ -6,7 +6,7 @@ import { ref } from 'vue'
 const files = ref([])
 
 // データ取得する処理
-const fetchFiles = async (Promise) => {
+const fetchFiles = async () => {
   const getData = await axios.get('/api/scandir.php')
   // console.log(getData.data.files)
   files.value = getData.data.files
