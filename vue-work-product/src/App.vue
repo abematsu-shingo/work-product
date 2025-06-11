@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRef, watch } from 'vue'
 
 interface FileItem {
   name: string
@@ -40,9 +40,22 @@ const getApi = async (): Promise<void> => {
   }
 }
 
+// previewの画像をランダム表示
+let randomUrl = ''
+const Preview = () => {
+  const rand = Math.floor(Math.random() * files.value.length)
+  // console.log(files.value[rand].url)
+  randomUrl = files.value[rand].url
+}
+
 // コンポーネントマウント時にAPI取得
 onMounted(() => {
   getApi()
+})
+
+// filesが更新されたらプレビュー更新
+watch(files, () => {
+  Preview()
 })
 </script>
 
@@ -53,7 +66,7 @@ onMounted(() => {
 
   <!-- 取得したデータをリスト出力 -->
   <main>
-    <div v-if="files.length" class="preview"><img :src="files[0].url" /></div>
+    <div v-if="files.length" class="preview"><img :src="randomUrl" /></div>
     <div class="thumbnail">
       <ul v-if="files.length">
         <li v-for="file in files" :key="file.name">
