@@ -1,20 +1,30 @@
-<script setup>
+<script setup lang="ts">
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 
+interface FileItem {
+  name: string
+  url: string
+}
+interface Api {
+  result: boolean
+  files: FileItem[]
+  message: string
+}
+
 // 取得したデータを格納
-const files = ref([])
+const files = ref<FileItem[]>([])
 // エラーが発生した場合のメッセージ
-const errerMessage = ref('')
+const errerMessage = ref<string>('')
 
 // APIデータを取得する処理
-const getApi = async () => {
+const getApi = async (): Promise<void> => {
   // errerMessageの中身をリセット
   errerMessage.value = ''
 
   try {
     // APIが取得できた場合の処理
-    const api = await axios.get('/api/scandir.php')
+    const api = await axios.get<Api>('/api/scandir.php')
     console.log(api.data)
     if (api.data.result) {
       // apiデータのresultがtrueだった場合、取得したデータをfilesへ格納
@@ -35,6 +45,7 @@ onMounted(() => {
   getApi()
 })
 </script>
+
 <template>
   <h1>Work Product</h1>
   <!-- apiデータを取得するボタン -->
@@ -48,4 +59,5 @@ onMounted(() => {
   </ul>
   <p v-if="errerMessage">{{ errerMessage }}</p>
 </template>
+
 <style scoped></style>
