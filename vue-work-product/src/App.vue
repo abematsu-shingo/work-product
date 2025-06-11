@@ -4,20 +4,29 @@ import { ref } from 'vue'
 
 // 取得したデータを格納
 const files = ref([])
+// エラーが発生した場合のメッセージ
 const errerMessage = ref('')
 
 // APIデータを取得する処理
 const getApi = async () => {
-  const api = await axios.get('/api/scandir.php')
-  console.log(api.data)
+  // errerMessageの中身をリセット
+  errerMessage.value = ''
 
-  if (api.data.result) {
-    // apiデータのresultがtrueだった場合、取得したデータをfilesへ格納
-    // scrpit内でrefの中身を操作する場合は、明示的にvalueを指定
-    files.value = api.data.files
-  } else {
-    // apiデータのresultがfalseだった場合、messageをerrerMessageに代入
-    errerMessage.value = api.data.message // 'message' => '指定されたディレクトリが見つかりません。'
+  try {
+    // APIが取得できた場合の処理
+    const api = await axios.get('/api/scandir.php')
+    console.log(api.data)
+    if (api.data.result) {
+      // apiデータのresultがtrueだった場合、取得したデータをfilesへ格納
+      // scrpit内でrefの中身を操作する場合は、明示的にvalueを指定
+      files.value = api.data.files
+    } else {
+      // apiデータのresultがfalseだった場合、messageをerrerMessageに代入
+      errerMessage.value = api.data.message // 'message' => '指定されたディレクトリが見つかりません。'
+    }
+  } catch {
+    // APIが取得できなかった場合の処理
+    errerMessage.value = 'サーバー通信中にエラーが発生しました。'
   }
 }
 </script>
