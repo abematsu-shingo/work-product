@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 // 取得したデータを格納
 const files = ref([])
@@ -29,6 +29,11 @@ const getApi = async () => {
     errerMessage.value = 'サーバー通信中にエラーが発生しました。'
   }
 }
+
+// コンポーネントマウント時にAPI取得
+onMounted(() => {
+  getApi()
+})
 </script>
 <template>
   <h1>Work Product</h1>
