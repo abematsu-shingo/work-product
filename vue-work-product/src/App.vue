@@ -68,15 +68,15 @@ onMounted(() => {
 <style scoped>
 main {
   display: flex;
-}
-.thumbnail {
-  width: 40%;
+  width: 90%;
+  margin: 0 auto;
 }
 ul {
-  width: 40%;
+  width: 50%;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 150px 150px 150px;
-  grid-template-rows: 150px 150px 150px;
+  grid-template-columns: 10vw 10vw 10vw;
+  grid-template-rows: 10vw 10vw 10vw;
   gap: 30px 30px;
 }
 li {
@@ -87,12 +87,15 @@ li {
   border: 0.5px solid;
 }
 .thumbnail img {
-  width: 70%;
+  width: 80%;
 }
 .preview {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 50%;
+}
+.preview img {
+  width: 50vw;
 }
 </style>
