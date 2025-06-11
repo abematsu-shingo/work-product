@@ -21,8 +21,8 @@ const getApi = async () => {
 
   <!-- 取得したデータをリスト出力 -->
   <ul>
-    <li v-for="file in files">
-      <a :href="file.url">{{ file.name }}</a>
+    <li v-for="file in files" :key="file.name">
+      <a :href="file.url" target="_blank" rel="noopener noreferrer">{{ file.name }}</a>
     </li>
   </ul>
 </template>
