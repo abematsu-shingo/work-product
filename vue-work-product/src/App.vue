@@ -52,12 +52,47 @@ onMounted(() => {
   <button @click="getApi">Get Api</button>
 
   <!-- 取得したデータをリスト出力 -->
-  <ul v-if="files.length">
-    <li v-for="file in files" :key="file.name">
-      <a :href="file.url" target="_blank" rel="noopener noreferrer">{{ file.name }}</a>
-    </li>
-  </ul>
-  <p v-if="errerMessage">{{ errerMessage }}</p>
+  <main>
+    <div v-if="files.length" class="preview"><img :src="files[0].url" /></div>
+    <div class="thumbnail">
+      <ul v-if="files.length">
+        <li v-for="file in files" :key="file.name">
+          <img :src="file.url" :title="file.name" :alt="file.name" />
+        </li>
+      </ul>
+    </div>
+    <p v-if="errerMessage">{{ errerMessage }}</p>
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+main {
+  display: flex;
+}
+.thumbnail {
+  width: 40%;
+}
+ul {
+  width: 40%;
+  display: grid;
+  grid-template-columns: 150px 150px 150px;
+  grid-template-rows: 150px 150px 150px;
+  gap: 30px 30px;
+}
+li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  border: 0.5px solid;
+}
+.thumbnail img {
+  width: 70%;
+}
+.preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+</style>
