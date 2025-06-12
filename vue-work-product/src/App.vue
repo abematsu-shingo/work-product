@@ -109,6 +109,6 @@ li {
   width: 50%;
 }
 .preview img {
-  width: 50vw;
+  width: 40vw;
 }
 </style>
