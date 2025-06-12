@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { onMounted, ref, toRef, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 interface FileItem {
   name: string
@@ -41,11 +41,13 @@ const getApi = async (): Promise<void> => {
 }
 
 // previewの画像をランダム表示
-let randomUrl = ''
-const Preview = () => {
-  const rand = Math.floor(Math.random() * files.value.length)
-  // console.log(files.value[rand].url)
-  randomUrl = files.value[rand].url
+let previewUrl = ref<string>('')
+const setRandomPreview = () => {
+  if (files.value.length) {
+    const rand = Math.floor(Math.random() * files.value.length)
+    // console.log(files.value[rand].url)
+    previewUrl.value = files.value[rand].url
+  }
 }
 
 // コンポーネントマウント時にAPI取得
@@ -55,8 +57,13 @@ onMounted(() => {
 
 // filesが更新されたらプレビュー更新
 watch(files, () => {
-  Preview()
+  setRandomPreview()
 })
+
+const showPreview = (event: MouseEvent) => {
+  console.log((event.target as HTMLElement).title)
+  previewUrl.value = (event.target as HTMLElement).title
+}
 </script>
 
 <template>
@@ -66,11 +73,11 @@ watch(files, () => {
 
   <!-- 取得したデータをリスト出力 -->
   <main>
-    <div v-if="files.length" class="preview"><img :src="randomUrl" /></div>
+    <div v-if="files.length" class="preview"><img :src="previewUrl" /></div>
     <div class="thumbnail">
       <ul v-if="files.length">
-        <li v-for="file in files" :key="file.name">
-          <img :src="file.url" :title="file.name" :alt="file.name" />
+        <li @mouseenter="showPreview" v-for="file in files" :key="file.name" :title="file.url">
+          <img :src="file.url" :alt="file.name" />
         </li>
       </ul>
     </div>
@@ -84,6 +91,8 @@ main {
   width: 90%;
   margin: 0 auto;
 }
+
+/* workproduct内のファイルをサムネイル表示 */
 ul {
   width: 50%;
   margin: 0 auto;
@@ -102,6 +111,8 @@ li {
 .thumbnail img {
   width: 80%;
 }
+
+/* サムネイル画像のプレビュー表示 */
 .preview {
   display: flex;
   justify-content: center;
