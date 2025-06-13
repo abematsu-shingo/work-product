@@ -42,10 +42,12 @@ const getApi = async (): Promise<void> => {
 
 // previewの画像をランダム表示
 let previewUrl = ref<string>('')
+let previewName = ref<string>('')
 const setRandomPreview = () => {
   if (files.value.length) {
     const rand = Math.floor(Math.random() * files.value.length)
     previewUrl.value = files.value[rand].url
+    previewName.value = files.value[rand].name
   }
 }
 
@@ -67,7 +69,9 @@ const showPreview = (event: MouseEvent) => {
   if (imgElement) {
     // imgタグがあった場合は、srcの取得
     const imgUrl = imgElement.src
+    const imgName = imgElement.alt
     previewUrl.value = imgUrl
+    previewName.value = imgName
   }
 }
 </script>
@@ -75,14 +79,19 @@ const showPreview = (event: MouseEvent) => {
 <template>
   <h1>Work Product</h1>
   <!-- apiデータを取得するボタン -->
-  <button @click="getApi">Get Api</button>
+  <!-- <button @click="getApi">Get Api</button> -->
 
   <!-- 取得したデータをリスト出力 -->
   <main>
-    <div v-if="files.length" class="preview"><img :src="previewUrl" /></div>
+    <!-- 古い要素が消えるアニメーションを追加することで、画像切り替わり時のチラツキ改善 -->
+    <transition mode="out-in">
+      <div v-if="files.length && previewUrl" class="preview" :key="previewUrl">
+        <img :src="previewUrl" :alt="previewName" :title="previewName" />
+      </div>
+    </transition>
     <div class="thumbnail">
       <ul v-if="files.length">
-        <li @mouseenter="showPreview" v-for="file in files" :key="file.name" :title="file.url">
+        <li @mouseenter="showPreview" v-for="file in files" :key="file.name" :title="file.name">
           <img :src="file.url" :alt="file.name" />
         </li>
       </ul>
@@ -92,6 +101,10 @@ const showPreview = (event: MouseEvent) => {
 </template>
 
 <style scoped>
+h1 {
+  text-align: center;
+  margin-bottom: 10vh;
+}
 main {
   display: flex;
   width: 90%;
@@ -114,6 +127,9 @@ li {
   list-style: none;
   border: 0.5px solid;
 }
+.thumbnail {
+  display: block;
+}
 .thumbnail img {
   width: 80%;
 }
@@ -127,5 +143,15 @@ li {
 }
 .preview img {
   width: 40vw;
+}
+
+.v-enter-from {
+  opacity: 0;
+}
+.v-enter-to {
+  opacity: 1;
+}
+.v-enter-active {
+  transition: all 500ms ease;
 }
 </style>
