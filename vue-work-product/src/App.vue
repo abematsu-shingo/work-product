@@ -25,7 +25,7 @@ const getApi = async (): Promise<void> => {
   try {
     // APIが取得できた場合の処理
     const api = await axios.get<Api>('/api/scandir.php')
-    console.log(api.data)
+    // console.log(api.data)
     if (api.data.result) {
       // apiデータのresultがtrueだった場合、取得したデータをfilesへ格納
       // scrpit内でrefの中身を操作する場合は、明示的にvalueを指定
@@ -45,7 +45,6 @@ let previewUrl = ref<string>('')
 const setRandomPreview = () => {
   if (files.value.length) {
     const rand = Math.floor(Math.random() * files.value.length)
-    // console.log(files.value[rand].url)
     previewUrl.value = files.value[rand].url
   }
 }
@@ -61,8 +60,15 @@ watch(files, () => {
 })
 
 const showPreview = (event: MouseEvent) => {
-  console.log((event.target as HTMLElement).title)
-  previewUrl.value = (event.target as HTMLElement).title
+  // console.log((event.currentTarget as HTMLElement).querySelector('img').src)
+  const targetElement = event.currentTarget as HTMLElement
+  const imgElement = targetElement.querySelector('img')
+  // imgタグはnullの(生成されていない)可能性があるため、if分岐で明記
+  if (imgElement) {
+    // imgタグがあった場合は、srcの取得
+    const imgUrl = imgElement.src
+    previewUrl.value = imgUrl
+  }
 }
 </script>
 
