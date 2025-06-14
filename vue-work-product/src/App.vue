@@ -90,7 +90,7 @@ const showPreview = (event: MouseEvent) => {
       </div>
     </transition>
     <div class="thumbnail">
-      <TransitionGroup name="fade" tag="ul">
+      <TransitionGroup name="fade" tag="ul" v-show="files.length">
         <li
           @mouseenter="showPreview"
           v-for="(file, index) in files"
