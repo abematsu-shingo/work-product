@@ -132,6 +132,11 @@ li {
   list-style: none;
   border: 0.5px solid;
   overflow: hidden;
+  transition: 0.7s;
+}
+li:hover {
+  background-color: #deffe2;
+  transition: 0.7s;
 }
 li:hover img {
   transform: scale(1.3);
