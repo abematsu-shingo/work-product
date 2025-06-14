@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, TransitionGroup, watch } from 'vue'
 
 interface FileItem {
   name: string
@@ -84,17 +84,23 @@ const showPreview = (event: MouseEvent) => {
   <!-- 取得したデータをリスト出力 -->
   <main>
     <!-- 古い要素が消えるアニメーションを追加することで、画像切り替わり時のチラツキ改善 -->
-    <transition mode="out-in">
+    <transition name="preview" mode="out-in">
       <div v-if="files.length && previewUrl" class="preview" :key="previewUrl">
         <img :src="previewUrl" :alt="previewName" :title="previewName" />
       </div>
     </transition>
     <div class="thumbnail">
-      <ul v-if="files.length">
-        <li @mouseenter="showPreview" v-for="file in files" :key="file.name" :title="file.name">
+      <TransitionGroup name="fade" tag="ul">
+        <li
+          @mouseenter="showPreview"
+          v-for="(file, index) in files"
+          :key="file.name"
+          :title="file.name"
+          :style="{ '--delay': index * 0.1 + 's' }"
+        >
           <img :src="file.url" :alt="file.name" />
         </li>
-      </ul>
+      </TransitionGroup>
     </div>
     <p v-if="errerMessage">{{ errerMessage }}</p>
   </main>
@@ -145,13 +151,26 @@ li {
   width: 40vw;
 }
 
-.v-enter-from {
+.preview-enter-from {
   opacity: 0;
 }
-.v-enter-to {
+.preview-enter-to {
   opacity: 1;
 }
-.v-enter-active {
-  transition: all 500ms ease;
+.preview-enter-active {
+  transition: all 0.5s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(50px);
+}
+.fade-enter-to {
+  opacity: 2;
+  transform: translateX(0);
+}
+.fade-enter-active {
+  transition: all 1s ease;
+  transition-delay: var(--delay);
 }
 </style>
