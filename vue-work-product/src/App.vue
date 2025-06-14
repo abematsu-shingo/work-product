@@ -62,7 +62,6 @@ watch(files, () => {
 })
 
 const showPreview = (event: MouseEvent) => {
-  // console.log((event.currentTarget as HTMLElement).querySelector('img').src)
   const targetElement = event.currentTarget as HTMLElement
   const imgElement = targetElement.querySelector('img')
   // imgタグはnullの(生成されていない)可能性があるため、if分岐で明記
@@ -132,12 +131,18 @@ li {
   align-items: center;
   list-style: none;
   border: 0.5px solid;
+  overflow: hidden;
+}
+li:hover img {
+  transform: scale(1.3);
+  transition: 0.7s;
 }
 .thumbnail {
   display: block;
 }
 .thumbnail img {
   width: 80%;
+  transition: 0.7s;
 }
 
 /* サムネイル画像のプレビュー表示 */
@@ -151,6 +156,7 @@ li {
   width: 40vw;
 }
 
+/* プレビュー画像のアニメーション */
 .preview-enter-from {
   opacity: 0;
 }
@@ -161,6 +167,7 @@ li {
   transition: all 0.5s ease;
 }
 
+/* サムネイル画像のアニメーション */
 .fade-enter-from {
   opacity: 0;
   transform: translateX(50px);
