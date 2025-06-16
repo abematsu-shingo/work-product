@@ -25,10 +25,9 @@ const getApi = async (): Promise<void> => {
   try {
     // APIが取得できた場合の処理
     const api = await axios.get<Api>('/php/scandir.php')
-    // const api = await axios.get<Api>('/php/scandir.php')
+    // const api = await axios.get<Api>('/api/scandir.php')
     if (api.data.result) {
       // apiデータのresultがtrueだった場合、取得したデータをfilesへ格納
-      // scrpit内でrefの中身を操作する場合は、明示的にvalueを指定
       files.value = api.data.files
     } else {
       // apiデータのresultがfalseだった場合、messageをerrerMessageに代入
@@ -76,13 +75,12 @@ const showPreview = (event: MouseEvent) => {
 </script>
 
 <template>
-  <h1>Work Product</h1>
+  <h1>Work Product<br />@Image</h1>
   <!-- apiデータを取得するボタン -->
   <!-- <button @click="getApi">Get Api</button> -->
 
   <!-- 取得したデータをリスト出力 -->
   <main>
-    <!-- 古い要素が消えるアニメーションを追加することで、画像切り替わり時のチラツキ改善 -->
     <transition name="preview" mode="out-in">
       <div v-if="files.length && previewUrl" class="preview" :key="previewUrl">
         <img :src="previewUrl" :alt="previewName" :title="previewName" />
@@ -108,18 +106,18 @@ const showPreview = (event: MouseEvent) => {
 <style scoped>
 h1 {
   text-align: center;
-  margin-bottom: 10vh;
+  margin-bottom: 5vh;
 }
 main {
   display: flex;
   width: 90%;
   margin: 0 auto;
+  justify-content: space-evenly;
 }
 
 /* workproduct内のファイルをサムネイル表示 */
 ul {
-  width: 50%;
-  margin: 0 auto;
+  padding-left: 0;
   display: grid;
   grid-template-columns: 10vw 10vw 10vw;
   grid-template-rows: 10vw 10vw 10vw;
@@ -169,7 +167,7 @@ li:hover img {
   opacity: 1;
 }
 .preview-enter-active {
-  transition: all 0.5s ease;
+  transition: all 1s ease;
 }
 
 /* サムネイル画像のアニメーション */
