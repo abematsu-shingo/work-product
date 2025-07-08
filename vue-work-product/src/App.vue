@@ -24,7 +24,7 @@ const getApi = async (): Promise<void> => {
 
   try {
     // APIが取得できた場合の処理
-    const api = await axios.get<Api>('/php/scandir.php')
+    const api = await axios.get<Api>('./php/scandir.php')
     // const api = await axios.get<Api>('/api/scandir.php')
     if (api.data.result) {
       // apiデータのresultがtrueだった場合、取得したデータをfilesへ格納
