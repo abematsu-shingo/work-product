@@ -1,7 +1,7 @@
 <?php
 // CORS（Cross-Origin Resource Sharing）ヘッダー設定
 // "https://lgqqi65169.rakkoserver.net"からのアクセスを許可
-header('Access-Control-Allow-Origin: https://lgqqi65169.rakkoserver.net/index');
+header('Access-Control-Allow-Origin: https://essea-numero2.com');
 // json形式でデータ送信
 header('Content-Type: application/json');
 
@@ -21,7 +21,7 @@ if(is_dir($directory)){
     foreach($files as $file) {
         
         // WEB上のルートURL + ファイル名 でURL生成
-        $base_url = 'https://lgqqi65169.rakkoserver.net/work-product/';
+        $base_url = 'https://essea-numero2.com/work-product/';
         $file_url = $base_url . urlencode($file);
 
         // 取得したファイルを配列に格納
