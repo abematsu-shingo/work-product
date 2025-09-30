@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { onMounted, ref, TransitionGroup, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 interface FileItem {
   name: string
@@ -40,8 +40,8 @@ const getApi = async (): Promise<void> => {
 }
 
 // previewの画像をランダム表示
-let previewUrl = ref<string>('')
-let previewName = ref<string>('')
+const previewUrl = ref<string>('')
+const previewName = ref<string>('')
 const setRandomPreview = () => {
   if (files.value.length) {
     const rand = Math.floor(Math.random() * files.value.length)
